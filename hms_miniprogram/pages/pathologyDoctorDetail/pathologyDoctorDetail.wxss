@@ -1,0 +1,4 @@
+/* pages/pathologyDoctorDetail/pathologyDoctorDetail.wxss */
+/* 样式与doctorDetail相同 */
+@import '../doctorDetail/doctorDetail.wxss';
+

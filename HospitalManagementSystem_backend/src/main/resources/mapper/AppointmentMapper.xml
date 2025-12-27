@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mapper.AppointmentMapper">
+
+    <!-- 查询患者预约列表 -->
+    <select id="selectPatientAppointments" resultType="com.hospital.entity.Appointment">
+        <![CDATA[
+        SELECT 
+            a.id,
+            a.patient_id,
+            a.doctor_id,
+            a.appointment_time,
+            a.time_slot,
+            a.status,
+            a.symptom_description,
+            a.fee,
+            a.order_number,
+            a.department_location,
+            a.created_time,
+            a.updated_time,
+            p.name          AS patient_name,
+            p.phone         AS patient_phone,
+            d.name          AS doctor_name,
+            d.title         AS doctor_title,
+            d.avatar_url    AS doctor_avatar,
+            dept.name       AS department_name
+        FROM appointments a
+        LEFT JOIN patients p ON a.patient_id = p.id
+        LEFT JOIN doctors d ON a.doctor_id = d.id
+        LEFT JOIN departments dept ON d.department_id = dept.id
+        WHERE a.patient_id = #{patientId}
+        ORDER BY a.appointment_time DESC
+        ]]>
+    </select>
+
+    <!-- 查询医生今日预约 -->
+    <select id="selectTodayAppointmentsByDoctor" resultType="com.hospital.entity.Appointment">
+        <![CDATA[
+        SELECT 
+            a.id,
+            a.patient_id,
+            a.doctor_id,
+            a.appointment_time,
+            a.time_slot,
+            a.status,
+            a.symptom_description,
+            a.fee,
+            a.order_number,
+            a.department_location,
+            a.created_time,
+            a.updated_time,
+            p.name          AS patient_name,
+            p.phone         AS patient_phone,
+            d.name          AS doctor_name,
+            d.title         AS doctor_title,
+            d.avatar_url    AS doctor_avatar,
+            dept.name       AS department_name
+        FROM appointments a
+        LEFT JOIN patients p ON a.patient_id = p.id
+        LEFT JOIN doctors d ON a.doctor_id = d.id
+        LEFT JOIN departments dept ON d.department_id = dept.id
+        WHERE a.doctor_id = #{doctorId}
+          AND DATE(a.appointment_time) >= CURDATE()
+          AND a.status IN (0, 1)
+        ORDER BY a.appointment_time ASC, a.time_slot ASC
+        ]]>
+    </select>
+
+</mapper>
+

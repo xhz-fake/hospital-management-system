@@ -1,0 +1,52 @@
+<!--pages/myAppointments/myAppointments.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">我的挂号</text>
+  </view>
+
+  <!-- a.选择框 -->
+  <view class="patient-selector">
+    <picker mode="selector" range="{{patientNames}}" value="{{selectedPatientIndex}}" bindchange="onPatientChange">
+      <view class="picker">
+        <text>{{currentPatientName}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- b.历史预约信息栏 -->
+  <scroll-view class="appointment-list" scroll-y="true">
+    <view class="appointment-item" wx:for="{{appointments}}" wx:key="id">
+      <!-- b1.右上角状态栏 -->
+      <view class="status-badge {{getStatusClass(item.status)}}">
+        {{getStatusText(item.status)}}
+      </view>
+
+      <!-- b2.主体信息 -->
+      <view class="appointment-content">
+        <image class="doctor-avatar" src="{{item.doctorAvatar || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="appointment-info">
+          <text class="doctor-name">{{item.doctorName || '医生'}}</text>
+          <text class="department">{{item.departmentName || '科室'}}</text>
+          <text class="patient-name">患者：{{item.patientName}}</text>
+          <text class="time">就诊时间：{{formatDateTime(item.appointmentTime)}} {{item.timeSlot}}</text>
+          <text class="fee">挂号诊金：91元</text>
+          <text class="order-number">挂号单号：{{item.orderNumber}}</text>
+          <text class="location">科室位置：{{item.departmentLocation || '门诊楼'}}</text>
+        </view>
+      </view>
+
+      <!-- b3.右下角按钮 -->
+      <view class="action-buttons">
+        <button class="cancel-btn" wx:if="{{item.status === 0}}" bindtap="cancelAppointment" data-id="{{item.id}}">
+          取消预约
+        </button>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{appointments.length === 0}}">
+      <text>暂无预约记录</text>
+    </view>
+  </scroll-view>
+</view>
+

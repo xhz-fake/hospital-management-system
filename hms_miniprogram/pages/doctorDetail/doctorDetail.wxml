@@ -1,0 +1,66 @@
+<!--pages/doctorDetail/doctorDetail.wxml-->
+<view class="container">
+  <!-- a.医生信息栏 -->
+  <view class="doctor-header">
+    <!-- 医生头像图片位置，建议图片尺寸：150x150 -->
+    <image class="doctor-avatar" src="{{doctor.avatarUrl || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+    <view class="doctor-info">
+      <text class="doctor-name">{{doctor.name}}</text>
+      <text class="doctor-title">{{doctor.title}}</text>
+      <text class="doctor-department">{{departmentName}}</text>
+    </view>
+  </view>
+
+  <!-- b.三个子功能按钮 -->
+  <view class="tabs">
+    <view class="tab-item {{currentTab === 'home' ? 'active' : ''}}" bindtap="switchTab" data-tab="home">
+      主页
+    </view>
+    <view class="tab-item {{currentTab === 'appointment' ? 'active' : ''}}" bindtap="switchTab" data-tab="appointment">
+      挂号
+    </view>
+  </view>
+
+  <!-- 主页内容 -->
+  <view class="tab-content" wx:if="{{currentTab === 'home'}}">
+    <view class="info-section">
+      <text class="section-title">简介</text>
+      <text class="section-content">{{doctor.introduction || '暂无简介'}}</text>
+    </view>
+    <view class="info-section">
+      <text class="section-title">擅长</text>
+      <text class="section-content">{{doctor.expertise || '暂无'}}</text>
+    </view>
+  </view>
+
+  <!-- 挂号内容 -->
+  <view class="tab-content" wx:if="{{currentTab === 'appointment'}}">
+    <view class="date-slider">
+      <scroll-view class="date-scroll" scroll-x="true">
+        <view class="date-item {{selectedDate === item.date ? 'active' : ''}}" 
+              wx:for="{{dateList}}" wx:key="date"
+              bindtap="selectDate" data-date="{{item.date}}">
+          <text class="date-text">{{item.dateText}}</text>
+          <text class="date-week">{{item.week}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 时间选择 -->
+    <view class="time-section" wx:if="{{selectedDate}}">
+      <text class="time-label">选择时间段（费用：91元）</text>
+      <view class="time-grid">
+        <view class="time-item {{selectedTime === item ? 'active' : ''}}"
+              wx:for="{{timeSlots}}" wx:key="*this"
+              bindtap="selectTime" data-time="{{item}}">
+          {{item}}
+        </view>
+      </view>
+      <view class="action-buttons">
+        <button class="cancel-btn" bindtap="cancelAppointment">取消</button>
+        <button class="confirm-btn" bindtap="confirmAppointment">预约</button>
+      </view>
+    </view>
+  </view>
+</view>
+

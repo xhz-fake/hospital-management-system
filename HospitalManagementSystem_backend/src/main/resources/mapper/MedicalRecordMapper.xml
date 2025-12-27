@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mapper.MedicalRecordMapper">
+
+    <select id="selectByPatientWithJoins" resultType="com.hospital.entity.MedicalRecord">
+        <![CDATA[
+        SELECT 
+            r.id,
+            r.patient_id,
+            r.doctor_id,
+            r.appointment_id,
+            r.diagnosis,
+            r.treatment,
+            r.prescription,
+            r.record_content,
+            r.file_url,
+            r.created_time,
+            r.updated_time,
+            p.name AS patient_name,
+            d.name AS doctor_name
+        FROM medical_records r
+        LEFT JOIN patients p ON r.patient_id = p.id
+        LEFT JOIN doctors d ON r.doctor_id = d.id
+        WHERE r.patient_id = #{patientId}
+        ORDER BY r.created_time DESC, r.id DESC
+        ]]>
+    </select>
+
+</mapper>
+
+

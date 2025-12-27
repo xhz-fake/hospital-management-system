@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mapper.ScheduleMapper">
+
+    <!-- 查询医生排班 -->
+    <select id="selectSchedulesByDoctor" resultType="com.hospital.entity.Schedule">
+        <![CDATA[
+        SELECT 
+            id,
+            doctor_id,
+            work_date,
+            time_slot,
+            available_count,
+            created_time,
+            updated_time
+        FROM schedules
+        WHERE doctor_id = #{doctorId}
+          AND work_date >= #{startDate}
+          AND work_date <= #{endDate}
+        ORDER BY work_date ASC, time_slot ASC
+        ]]>
+    </select>
+
+</mapper>
+

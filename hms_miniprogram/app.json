@@ -1,0 +1,65 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/myPatients/myPatients",
+    "pages/patientCard/patientCard",
+    "pages/departmentList/departmentList",
+    "pages/map/map",
+    "pages/hospitalInfo/hospitalInfo",
+    "pages/serviceGuide/serviceGuide",
+    "pages/my/my",
+    "pages/paymentRecords/paymentRecords",
+    "pages/doctorList/doctorList",
+    "pages/doctorDetail/doctorDetail",
+    "pages/pathologyDoctorList/pathologyDoctorList",
+    "pages/pathologyDoctorDetail/pathologyDoctorDetail",
+    "pages/appointment/appointment",
+    "pages/appointmentSuccess/appointmentSuccess",
+    "pages/myAppointments/myAppointments",
+    "pages/medicalRecords/medicalRecords",
+    "pages/editPatient/editPatient",
+    "pages/addPatient/addPatient",
+    "pages/createMedicalRecord/createMedicalRecord",
+    "pages/messages/messages"
+  ],
+  "window": {
+    "navigationBarTitleText": "华为大学总医院",
+    "navigationBarBackgroundColor": "#0b988f",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#0b988f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png",
+        "text": "大厅"
+      },
+      {
+        "pagePath": "pages/departmentList/departmentList",
+        "iconPath": "assets/icons/outpatient.png",
+        "selectedIconPath": "assets/icons/outpatient-active.png",
+        "text": "门诊"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "assets/icons/my.png",
+        "selectedIconPath": "assets/icons/my-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于为您提供导航服务"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+

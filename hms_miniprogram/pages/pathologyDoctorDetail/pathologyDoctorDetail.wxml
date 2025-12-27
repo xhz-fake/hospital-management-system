@@ -1,0 +1,4 @@
+<!--pages/pathologyDoctorDetail/pathologyDoctorDetail.wxml-->
+<!-- 病理科医生详情页面，结构与doctorDetail相同 -->
+<include src="../doctorDetail/doctorDetail.wxml" />
+

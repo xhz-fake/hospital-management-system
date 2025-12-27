@@ -1,0 +1,11 @@
+<!--pages/map/map.wxml-->
+<view class="container">
+  <view class="map-container">
+    <view class="map-placeholder">
+      <text>地图位置</text>
+      <text class="map-text">点击下方按钮打开微信地图导航</text>
+    </view>
+    <button class="map-btn" bindtap="openWechatMap">来院导航</button>
+  </view>
+</view>
+

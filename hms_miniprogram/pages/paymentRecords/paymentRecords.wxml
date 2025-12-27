@@ -1,0 +1,37 @@
+<!--pages/paymentRecords/paymentRecords.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">缴费记录</text>
+  </view>
+
+  <!-- a.患者选择框 -->
+  <view class="patient-selector">
+    <picker mode="selector" range="{{patientNames}}" value="{{selectedPatientIndex}}" bindchange="onPatientChange">
+      <view class="picker">
+        <text>{{currentPatientName}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- b.缴费记录展示框 -->
+  <scroll-view class="payment-list" scroll-y="true">
+    <view class="payment-item" wx:for="{{payments}}" wx:key="id">
+      <image class="doctor-avatar" src="{{item.doctorAvatar || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="payment-info">
+        <text class="doctor-name">{{item.doctorName}}</text>
+        <text class="doctor-title">{{item.doctorTitle}}</text>
+        <text class="department">{{item.departmentName}}</text>
+        <text class="order-number">挂号单号：{{item.orderNumber}}</text>
+        <text class="patient-name">患者：{{item.patientName}}</text>
+        <text class="amount">缴费金额：{{item.fee}}元</text>
+        <text class="payment-time">缴费时间：{{formatDateTime(item.createdTime)}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{payments.length === 0}}">
+      <text>暂无缴费记录</text>
+    </view>
+  </scroll-view>
+</view>
+

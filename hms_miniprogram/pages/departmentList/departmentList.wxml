@@ -1,0 +1,22 @@
+<!--pages/departmentList/departmentList.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">选择科室</text>
+  </view>
+
+  <!-- a.输入框 -->
+  <view class="search-box">
+    <input class="search-input" placeholder="请输入科室" bindinput="onSearchInput" value="{{searchKeyword}}" />
+  </view>
+
+  <!-- b.科室列表 -->
+  <view class="department-list">
+    <view class="department-item" wx:for="{{filteredDepartments}}" wx:key="id" bindtap="selectDepartment" data-department="{{item}}">
+      <text class="department-name">{{item.name}}</text>
+      <view class="outpatient-btn" wx:if="{{selectedDepartmentId === item.id}}">
+        <text>{{item.name}}门诊</text>
+      </view>
+    </view>
+  </view>
+</view>
+

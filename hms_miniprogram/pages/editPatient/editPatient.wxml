@@ -1,0 +1,55 @@
+<!--pages/editPatient/editPatient.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">就诊人</text>
+  </view>
+
+  <!-- a.就诊人信息栏 -->
+  <view class="form">
+    <view class="form-item readonly">
+      <text class="label">姓名：</text>
+      <text class="value">{{formData.name}}</text>
+    </view>
+    <view class="form-item readonly">
+      <text class="label">身份证号：</text>
+      <text class="value">{{formData.idCard}}</text>
+    </view>
+    <view class="form-item readonly">
+      <text class="label">手机号：</text>
+      <text class="value">{{formData.phone}}</text>
+    </view>
+    <view class="form-item">
+      <text class="label">性别：</text>
+      <picker mode="selector" range="{{genderOptions}}" value="{{formData.gender}}" bindchange="onGenderChange">
+        <view class="picker-value">
+          <text>{{genderOptions[formData.gender || 0]}}</text>
+          <text class="arrow">></text>
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="label">出生日期：</text>
+      <picker mode="date" value="{{formData.birthDate}}" bindchange="onBirthDateChange">
+        <view class="picker-value">
+          <text>{{formData.birthDate || '请选择'}}</text>
+          <text class="arrow">></text>
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="label">居住地：</text>
+      <input class="input" placeholder="请输入居住地" bindinput="onResidenceInput" value="{{formData.residence}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">详细地址：</text>
+      <input class="input" placeholder="请输入详细地址" bindinput="onAddressInput" value="{{formData.address}}" />
+    </view>
+  </view>
+
+  <!-- b.底部按钮 -->
+  <view class="action-buttons">
+    <button class="delete-btn" bindtap="deletePatient">删除就诊人</button>
+    <button class="save-btn" bindtap="savePatient">保存就诊人信息</button>
+  </view>
+</view>
+

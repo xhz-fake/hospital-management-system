@@ -1,0 +1,71 @@
+/* pages/my/my.wxss */
+.container {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+}
+
+.user-section {
+  background: linear-gradient(135deg, #0b988f 0%, #0a7d75 100%);
+  padding: 60rpx 40rpx;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.user-name {
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.function-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+  background-color: #fff;
+  padding: 40rpx 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.function-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.function-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 15rpx;
+}
+
+.function-item text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.patient-manage {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 16rpx;
+}
+
+.manage-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.patient-manage text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.arrow {
+  color: #999;
+  font-size: 32rpx;
+}
+

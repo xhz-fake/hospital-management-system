@@ -1,0 +1,402 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小程序图标生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0b988f;
+            text-align: center;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .icon-item {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .icon-item canvas {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .icon-item button {
+            background: #0b988f;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .icon-item button:hover {
+            background: #088a7d;
+        }
+        .generate-all {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .generate-all button {
+            background: #0b988f;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .generate-all button:hover {
+            background: #088a7d;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 医院管理系统 - 小程序图标生成器</h1>
+        
+        <div class="info">
+            <strong>使用说明：</strong>
+            <ol>
+                <li>点击"生成所有图标"按钮，自动生成所有图标</li>
+                <li>或者单独点击每个图标下方的"下载"按钮</li>
+                <li>下载的图标会自动保存到对应的目录</li>
+                <li>将下载的图标文件移动到项目的 assets 目录下</li>
+            </ol>
+            <p><strong>注意：</strong>由于浏览器安全限制，需要手动将下载的文件移动到正确的位置。</p>
+        </div>
+
+        <div class="generate-all">
+            <button onclick="generateAllIcons()">🎨 生成所有图标</button>
+        </div>
+
+        <div class="icon-grid" id="iconGrid"></div>
+    </div>
+
+    <script>
+        // 主题色
+        const THEME_COLOR = '#0b988f';
+        const UNSELECTED_COLOR = '#7A7E83';
+        const BACKGROUND_COLOR = '#ffffff';
+
+        // 图标配置
+        const iconConfigs = [
+            // TabBar 图标
+            { name: 'home', size: 81, color: UNSELECTED_COLOR, shape: 'home', path: 'assets/icons/home.png' },
+            { name: 'home-active', size: 81, color: THEME_COLOR, shape: 'home', path: 'assets/icons/home-active.png' },
+            { name: 'outpatient', size: 81, color: UNSELECTED_COLOR, shape: 'medical', path: 'assets/icons/outpatient.png' },
+            { name: 'outpatient-active', size: 81, color: THEME_COLOR, shape: 'medical', path: 'assets/icons/outpatient-active.png' },
+            { name: 'my', size: 81, color: UNSELECTED_COLOR, shape: 'user', path: 'assets/icons/my.png' },
+            { name: 'my-active', size: 81, color: THEME_COLOR, shape: 'user', path: 'assets/icons/my-active.png' },
+            
+            // 功能图标
+            { name: 'search', size: 150, color: UNSELECTED_COLOR, shape: 'search', path: 'assets/icons/search.png' },
+            { name: 'wechat-pay', size: 40, color: '#09BB07', shape: 'circle', path: 'assets/icons/wechat-pay.png' },
+            
+            // 互联网医院图标
+            { name: 'outpatient-icon', size: 150, color: THEME_COLOR, shape: 'medical', path: 'assets/internetHospital/outpatient.png' },
+            { name: 'payment-icon', size: 150, color: THEME_COLOR, shape: 'payment', path: 'assets/internetHospital/payment.png' },
+            { name: 'medicalRecords-icon', size: 150, color: THEME_COLOR, shape: 'document', path: 'assets/internetHospital/medicalRecords.png' },
+            
+            // 医院信息图标
+            { name: 'hospitalOverview', size: 80, color: THEME_COLOR, shape: 'home', path: 'assets/hospitalInformation/hospitalOverview.png' },
+            { name: 'serviceGuide', size: 80, color: THEME_COLOR, shape: 'document', path: 'assets/hospitalInformation/serviceGuide.png' },
+            { name: 'outpatientInfo', size: 80, color: THEME_COLOR, shape: 'medical', path: 'assets/hospitalInformation/outpatientInfo.png' },
+            { name: 'hospitalNavigation', size: 80, color: THEME_COLOR, shape: 'location', path: 'assets/hospitalInformation/hospitalNavigation.png' },
+            
+            // 我的页面图标
+            { name: 'appointments', size: 80, color: THEME_COLOR, shape: 'calendar', path: 'assets/my/appointments.png' },
+            { name: 'payment', size: 80, color: THEME_COLOR, shape: 'payment', path: 'assets/my/payment.png' },
+            { name: 'medicalRecords', size: 80, color: THEME_COLOR, shape: 'document', path: 'assets/my/medicalRecords.png' },
+            { name: 'messages', size: 80, color: THEME_COLOR, shape: 'message', path: 'assets/my/messages.png' },
+            { name: 'patientManage', size: 80, color: THEME_COLOR, shape: 'user', path: 'assets/my/patientManage.png' },
+            
+            // 其他
+            { name: 'default-avatar', size: 100, color: THEME_COLOR, shape: 'user', path: 'assets/default-avatar.png' },
+        ];
+
+        // 绘制图标
+        function drawIcon(canvas, shape, color, size) {
+            const ctx = canvas.getContext('2d');
+            const centerX = size / 2;
+            const centerY = size / 2;
+            
+            // 清空画布
+            ctx.clearRect(0, 0, size, size);
+            
+            ctx.fillStyle = color;
+            ctx.strokeStyle = color;
+            ctx.lineWidth = size * 0.08;
+            
+            switch(shape) {
+                case 'home':
+                    // 房子图标
+                    drawHome(ctx, centerX, centerY, size * 0.6);
+                    break;
+                case 'medical':
+                    // 医疗十字
+                    drawMedicalCross(ctx, centerX, centerY, size * 0.5);
+                    break;
+                case 'user':
+                    // 用户图标
+                    drawUser(ctx, centerX, centerY, size * 0.5);
+                    break;
+                case 'search':
+                    // 搜索图标
+                    drawSearch(ctx, centerX, centerY, size * 0.4);
+                    break;
+                case 'payment':
+                    // 支付图标（人民币符号）
+                    drawPayment(ctx, centerX, centerY, size * 0.4);
+                    break;
+                case 'document':
+                    // 文档图标
+                    drawDocument(ctx, centerX, centerY, size * 0.5);
+                    break;
+                case 'location':
+                    // 位置图标
+                    drawLocation(ctx, centerX, centerY, size * 0.5);
+                    break;
+                case 'calendar':
+                    // 日历图标
+                    drawCalendar(ctx, centerX, centerY, size * 0.5);
+                    break;
+                case 'message':
+                    // 消息图标
+                    drawMessage(ctx, centerX, centerY, size * 0.5);
+                    break;
+                case 'circle':
+                    // 圆形
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, size * 0.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+            }
+        }
+
+        // 绘制房子
+        function drawHome(ctx, x, y, size) {
+            // 屋顶
+            ctx.beginPath();
+            ctx.moveTo(x, y - size * 0.4);
+            ctx.lineTo(x - size * 0.5, y - size * 0.1);
+            ctx.lineTo(x + size * 0.5, y - size * 0.1);
+            ctx.closePath();
+            ctx.fill();
+            
+            // 房子主体
+            ctx.fillRect(x - size * 0.35, y - size * 0.1, size * 0.7, size * 0.5);
+            
+            // 门
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(x - size * 0.1, y + size * 0.15, size * 0.2, size * 0.25);
+            ctx.fillStyle = ctx.strokeStyle;
+        }
+
+        // 绘制医疗十字
+        function drawMedicalCross(ctx, x, y, size) {
+            const thickness = size * 0.2;
+            // 横线
+            ctx.fillRect(x - size / 2, y - thickness / 2, size, thickness);
+            // 竖线
+            ctx.fillRect(x - thickness / 2, y - size / 2, thickness, size);
+        }
+
+        // 绘制用户
+        function drawUser(ctx, x, y, size) {
+            // 头部（圆形）
+            ctx.beginPath();
+            ctx.arc(x, y - size * 0.2, size * 0.25, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 身体（半圆形）
+            ctx.beginPath();
+            ctx.arc(x, y + size * 0.15, size * 0.35, 0, Math.PI);
+            ctx.fill();
+        }
+
+        // 绘制搜索
+        function drawSearch(ctx, x, y, size) {
+            // 圆圈
+            ctx.beginPath();
+            ctx.arc(x, y, size * 0.4, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // 手柄
+            const handleLength = size * 0.3;
+            ctx.beginPath();
+            ctx.moveTo(x + size * 0.28, y + size * 0.28);
+            ctx.lineTo(x + size * 0.28 + handleLength, y + size * 0.28 + handleLength);
+            ctx.stroke();
+        }
+
+        // 绘制支付
+        function drawPayment(ctx, x, y, size) {
+            ctx.font = `bold ${size * 0.6}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('￥', x, y);
+        }
+
+        // 绘制文档
+        function drawDocument(ctx, x, y, size) {
+            // 文档主体
+            ctx.fillRect(x - size * 0.3, y - size * 0.4, size * 0.6, size * 0.8);
+            
+            // 折角
+            ctx.beginPath();
+            ctx.moveTo(x + size * 0.1, y - size * 0.4);
+            ctx.lineTo(x + size * 0.3, y - size * 0.4);
+            ctx.lineTo(x + size * 0.3, y - size * 0.2);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.fill();
+            ctx.fillStyle = ctx.strokeStyle;
+        }
+
+        // 绘制位置
+        function drawLocation(ctx, x, y, size) {
+            // 定位针
+            ctx.beginPath();
+            ctx.arc(x, y - size * 0.1, size * 0.3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 针尖
+            ctx.beginPath();
+            ctx.moveTo(x, y + size * 0.2);
+            ctx.lineTo(x - size * 0.15, y + size * 0.35);
+            ctx.lineTo(x, y + size * 0.3);
+            ctx.lineTo(x + size * 0.15, y + size * 0.35);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // 绘制日历
+        function drawCalendar(ctx, x, y, size) {
+            // 日历主体
+            ctx.fillRect(x - size * 0.35, y - size * 0.2, size * 0.7, size * 0.6);
+            
+            // 顶部（装订部分）
+            ctx.fillRect(x - size * 0.35, y - size * 0.4, size * 0.7, size * 0.2);
+            
+            // 日期数字
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `bold ${size * 0.3}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('15', x, y + size * 0.1);
+            ctx.fillStyle = ctx.strokeStyle;
+        }
+
+        // 绘制消息
+        function drawMessage(ctx, x, y, size) {
+            // 消息气泡
+            ctx.beginPath();
+            ctx.moveTo(x - size * 0.35, y - size * 0.3);
+            ctx.lineTo(x + size * 0.35, y - size * 0.3);
+            ctx.lineTo(x + size * 0.35, y + size * 0.2);
+            ctx.lineTo(x, y + size * 0.35);
+            ctx.lineTo(x - size * 0.35, y + size * 0.2);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // 创建图标项
+        function createIconItem(config) {
+            const div = document.createElement('div');
+            div.className = 'icon-item';
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = config.size;
+            canvas.height = config.size;
+            canvas.style.width = '100px';
+            canvas.style.height = '100px';
+            canvas.style.imageRendering = 'pixelated';
+            
+            drawIcon(canvas, config.shape, config.color, config.size);
+            
+            const label = document.createElement('div');
+            label.textContent = config.name;
+            label.style.marginTop = '10px';
+            label.style.fontSize = '12px';
+            label.style.color = '#666';
+            
+            const button = document.createElement('button');
+            button.textContent = '下载';
+            button.onclick = () => downloadIcon(canvas, config.path, config.name);
+            
+            div.appendChild(canvas);
+            div.appendChild(label);
+            div.appendChild(button);
+            
+            return div;
+        }
+
+        // 下载图标
+        function downloadIcon(canvas, path, name) {
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = name + '.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                console.log(`图标已下载: ${path}`);
+            });
+        }
+
+        // 生成所有图标
+        function generateAllIcons() {
+            iconConfigs.forEach(config => {
+                setTimeout(() => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = config.size;
+                    canvas.height = config.size;
+                    drawIcon(canvas, config.shape, config.color, config.size);
+                    downloadIcon(canvas, config.path, config.name);
+                }, iconConfigs.indexOf(config) * 200);
+            });
+            
+            setTimeout(() => {
+                alert('所有图标已开始下载！请检查浏览器的下载文件夹。\n\n注意：需要手动将下载的文件移动到项目的 assets 目录下对应的文件夹。');
+            }, iconConfigs.length * 200 + 500);
+        }
+
+        // 初始化
+        window.onload = function() {
+            const grid = document.getElementById('iconGrid');
+            iconConfigs.forEach(config => {
+                grid.appendChild(createIconItem(config));
+            });
+        };
+    </script>
+</body>
+</html>
+

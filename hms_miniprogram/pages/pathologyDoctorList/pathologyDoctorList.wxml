@@ -1,0 +1,31 @@
+<!--pages/pathologyDoctorList/pathologyDoctorList.wxml-->
+<!-- 病理科医生列表页面，结构与doctorList类似 -->
+<view class="container">
+  <view class="header">
+    <text class="title">选择医师</text>
+  </view>
+
+  <view class="filter-bar">
+    <view class="filter-item" bindtap="showStatusFilter">
+      <text>{{statusText}}</text>
+      <text class="arrow">▼</text>
+    </view>
+    <view class="filter-item" bindtap="showTitleFilter">
+      <text>{{titleText}}</text>
+      <text class="arrow">▼</text>
+    </view>
+  </view>
+
+  <scroll-view class="doctor-list" scroll-y="true">
+    <view class="doctor-item" wx:for="{{doctors}}" wx:key="id" bindtap="goToDoctorDetail" data-doctor="{{item}}">
+      <image class="doctor-avatar" src="{{item.avatarUrl || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="doctor-info">
+        <text class="doctor-name">{{item.name}}</text>
+        <text class="doctor-title">{{item.title}}</text>
+        <text class="doctor-department">病理科</text>
+        <text class="doctor-expertise">{{item.expertise || '擅长病理诊断'}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+

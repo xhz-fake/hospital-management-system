@@ -1,0 +1,31 @@
+<!--pages/messages/messages.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">消息</text>
+  </view>
+
+  <scroll-view class="messages-list" scroll-y="true">
+    <view class="message-item" wx:for="{{messages}}" wx:key="id" bindtap="viewMessage" data-message="{{item}}">
+      <view class="message-header">
+        <text class="message-title">{{item.title}}</text>
+        <text class="message-time">{{item.time}}</text>
+      </view>
+      <text class="message-content">{{item.content}}</text>
+      <view class="message-details" wx:if="{{item.type === '预约成功' || item.type === '取消预约'}}">
+        <text>预约医生：{{item.doctorName}}</text>
+        <text>患者姓名：{{item.patientName}}</text>
+        <text>科室名：{{item.departmentName}}</text>
+        <text>就诊时间：{{item.appointmentTime}}</text>
+      </view>
+      <view class="message-details" wx:if="{{item.type === '建档成功'}}">
+        <text>患者姓名：{{item.patientName}}</text>
+        <text>卡号：{{item.patientId}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{messages.length === 0}}">
+      <text>暂无消息</text>
+    </view>
+  </scroll-view>
+</view>
+

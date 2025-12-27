@@ -1,0 +1,26 @@
+<!--pages/myPatients/myPatients.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">我的就诊人</text>
+  </view>
+
+  <!-- a.已保存的就诊人信息框 -->
+  <view class="patient-list">
+    <view class="patient-item" wx:for="{{patients}}" wx:key="id">
+      <view class="patient-info">
+        <text class="patient-name">{{item.name}}</text>
+        <text class="patient-id-card">{{item.idCard}}</text>
+      </view>
+      <view class="patient-actions">
+        <button class="edit-btn" bindtap="editPatient" data-patient="{{item}}">编辑</button>
+        <button class="delete-btn" bindtap="deletePatient" data-id="{{item.id}}">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- b.添加就诊人按钮 -->
+  <view class="add-btn" bindtap="goToAddPatient">
+    <text>+ 添加就诊人</text>
+  </view>
+</view>
+

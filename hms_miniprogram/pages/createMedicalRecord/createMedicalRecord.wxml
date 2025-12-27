@@ -1,0 +1,50 @@
+<view class="container">
+  <view class="header">
+    <text class="title">新增病历</text>
+  </view>
+
+  <view class="form">
+    <view class="form-item">
+      <text class="label">患者：</text>
+      <text class="value">{{patientName}}</text>
+    </view>
+    <view class="form-item">
+      <text class="label">医生：</text>
+      <picker mode="selector" range="{{doctorNames}}" value="{{selectedDoctorIndex}}" bindchange="onDoctorChange">
+        <view class="picker">
+          <text>{{selectedDoctorName}}</text>
+          <text class="arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="label">诊断：</text>
+      <input class="input" placeholder="请输入诊断" bindinput="onDiagnosisInput" value="{{formData.diagnosis}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">治疗方案：</text>
+      <textarea class="textarea" placeholder="请输入治疗方案" bindinput="onTreatmentInput" value="{{formData.treatment}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">处方：</text>
+      <textarea class="textarea" placeholder="请输入处方" bindinput="onPrescriptionInput" value="{{formData.prescription}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">病历内容：</text>
+      <textarea class="textarea" placeholder="请输入病历内容" bindinput="onRecordContentInput" value="{{formData.recordContent}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">附件：</text>
+      <button size="mini" bindtap="chooseFile">选择文件/图片</button>
+    </view>
+    <view wx:if="{{fileName}}" style="margin: 8px 0 0 88px;">
+      <text>已选择：{{fileName}}</text>
+    </view>
+  </view>
+
+  <view class="submit-area">
+    <button type="primary" bindtap="submit">提交</button>
+  </view>
+</view>
+
+

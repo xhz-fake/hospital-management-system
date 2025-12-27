@@ -1,0 +1,39 @@
+<!--pages/my/my.wxml-->
+<view class="container">
+  <!-- a.用户框 -->
+  <view class="user-section">
+    <text class="user-name">微信用户</text>
+  </view>
+
+  <!-- b.功能栏 -->
+  <view class="function-grid">
+    <view class="function-item" bindtap="goToMyAppointments">
+      <!-- 我的挂号图标位置，建议图片尺寸：80x80 -->
+      <image src="../../assets/my/appointments.png" mode="aspectFit" class="function-icon"></image>
+      <text>我的挂号</text>
+    </view>
+    <view class="function-item" bindtap="goToPayment">
+      <!-- 我的缴费图标位置，建议图片尺寸：80x80 -->
+      <image src="../../assets/my/payment.png" mode="aspectFit" class="function-icon"></image>
+      <text>我的缴费</text>
+    </view>
+    <view class="function-item" bindtap="goToMedicalRecords">
+      <!-- 病历查询图标位置，建议图片尺寸：80x80 -->
+      <image src="../../assets/my/medicalRecords.png" mode="aspectFit" class="function-icon"></image>
+      <text>病历查询</text>
+    </view>
+    <view class="function-item" bindtap="goToMessages">
+      <!-- 消息图标位置，建议图片尺寸：80x80 -->
+      <image src="../../assets/my/messages.png" mode="aspectFit" class="function-icon"></image>
+      <text>消息</text>
+    </view>
+  </view>
+
+  <!-- c.就诊人管理框 -->
+  <view class="patient-manage" bindtap="goToMyPatients">
+    <image src="../../assets/my/patientManage.png" mode="aspectFit" class="manage-icon"></image>
+    <text>就诊人管理</text>
+    <text class="arrow">></text>
+  </view>
+</view>
+

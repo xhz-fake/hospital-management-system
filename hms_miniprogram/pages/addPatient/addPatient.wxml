@@ -1,0 +1,32 @@
+<!--pages/addPatient/addPatient.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">添加就诊人</text>
+  </view>
+
+  <view class="form">
+    <!-- a1.姓名输入框 -->
+    <view class="form-item">
+      <text class="label">姓名：</text>
+      <input class="input" placeholder="请输入姓名" bindinput="onNameInput" value="{{formData.name}}" />
+    </view>
+
+    <!-- a2.身份证输入框 -->
+    <view class="form-item">
+      <text class="label">身份证：</text>
+      <input class="input" placeholder="请输入身份证号" bindinput="onIdCardInput" value="{{formData.idCard}}" maxlength="18" />
+    </view>
+
+    <!-- a3.手机号输入框 -->
+    <view class="form-item">
+      <text class="label">手机号：</text>
+      <input class="input" placeholder="请输入手机号" bindinput="onPhoneInput" value="{{formData.phone}}" type="number" maxlength="11" />
+    </view>
+  </view>
+
+  <!-- b.添加就诊人按钮 -->
+  <view class="submit-btn" bindtap="submit">
+    <text>添加就诊人</text>
+  </view>
+</view>
+

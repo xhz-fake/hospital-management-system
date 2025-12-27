@@ -1,0 +1,86 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 标题 -->
+  <view class="header">
+    <text class="hospital-name">华为大学总医院</text>
+  </view>
+
+  <!-- a.搜索框 -->
+  <view class="search-box">
+    <input class="search-input" placeholder="搜索科室/医生" bindinput="onSearchInput" value="{{searchKeyword}}" />
+    <image class="search-icon" src="../../assets/icons/search.png" mode="aspectFit"></image>
+  </view>
+
+  <!-- b.就诊人轮播图 -->
+  <view class="patient-swiper-section">
+    <view class="section-header">
+      <text class="section-label">就诊人</text>
+      <view class="add-patient-btn" bindtap="goToAddPatient">
+        <text>+ 添加就诊人</text>
+      </view>
+    </view>
+    <swiper class="patient-swiper" indicator-dots="{{patients.length > 1}}" autoplay="{{false}}" circular="{{true}}">
+      <swiper-item wx:for="{{patients}}" wx:key="id" bindtap="goToPatientCard" data-patient="{{item}}">
+        <view class="patient-card">
+          <text class="patient-name">{{item.name}}</text>
+          <text class="patient-id-card">{{item.idCard}}</text>
+        </view>
+      </swiper-item>
+      <swiper-item wx:if="{{patients.length === 0}}" bindtap="goToAddPatient">
+        <view class="patient-card empty-card">
+          <text>未绑定就诊人</text>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- c.互联网医院模块 -->
+  <view class="internet-hospital-section">
+    <text class="section-label">互联网医院</text>
+    <view class="function-grid">
+      <view class="function-item" bindtap="goToOutpatient">
+        <!-- 互联网门诊图片位置，建议图片尺寸：150x150 -->
+        <image src="../../assets/internetHospital/outpatient.png" mode="aspectFit" class="function-icon"></image>
+        <text>互联网门诊</text>
+      </view>
+      <view class="function-item" bindtap="goToPayment">
+        <!-- 网上缴费图片位置，建议图片尺寸：150x150 -->
+        <image src="../../assets/internetHospital/payment.png" mode="aspectFit" class="function-icon"></image>
+        <text>门诊缴费</text>
+      </view>
+      <view class="function-item" bindtap="goToMedicalRecords">
+        <!-- 我的病历图片位置，建议图片尺寸：150x150 -->
+        <image src="../../assets/internetHospital/medicalRecords.png" mode="aspectFit" class="function-icon"></image>
+        <text>我的病历</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- d.医院信息模块 -->
+  <view class="hospital-info-section">
+    <text class="section-label">医院信息</text>
+    <view class="info-grid">
+      <view class="info-item" bindtap="goToHospitalInfo">
+        <!-- 医院简介图标位置，建议图片尺寸：80x80 -->
+        <image src="../../assets/hospitalInformation/hospitalOverview.png" mode="aspectFit" class="info-icon"></image>
+        <text>医院简介</text>
+      </view>
+      <view class="info-item" bindtap="goToServiceGuide">
+        <!-- 服务指南图标位置，建议图片尺寸：80x80 -->
+        <image src="../../assets/hospitalInformation/serviceGuide.png" mode="aspectFit" class="info-icon"></image>
+        <text>服务指南</text>
+      </view>
+      <view class="info-item" bindtap="goToDepartmentList">
+        <!-- 出诊信息图标位置，建议图片尺寸：80x80 -->
+        <image src="../../assets/hospitalInformation/outpatientInfo.png" mode="aspectFit" class="info-icon"></image>
+        <text>出诊信息</text>
+      </view>
+      <view class="info-item" bindtap="goToMap">
+        <!-- 来院导航图标位置，建议图片尺寸：80x80 -->
+        <image src="../../assets/hospitalInformation/hospitalNavigation.png" mode="aspectFit" class="info-icon"></image>
+        <text>来院导航</text>
+      </view>
+    </view>
+  </view>
+</view>
+

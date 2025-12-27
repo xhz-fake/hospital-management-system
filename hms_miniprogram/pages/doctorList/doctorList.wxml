@@ -1,0 +1,51 @@
+<!--pages/doctorList/doctorList.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">选择医师</text>
+  </view>
+
+  <!-- a.检索栏 -->
+  <view class="filter-bar">
+    <view class="filter-item" bindtap="showStatusFilter">
+      <text>{{statusText}}</text>
+      <text class="arrow">▼</text>
+    </view>
+    <view class="filter-item" bindtap="showTitleFilter">
+      <text>{{titleText}}</text>
+      <text class="arrow">▼</text>
+    </view>
+  </view>
+
+  <!-- b.医生信息栏 -->
+  <scroll-view class="doctor-list" scroll-y="true">
+    <view class="doctor-item" wx:for="{{doctors}}" wx:key="id" bindtap="goToDoctorDetail" data-doctor="{{item}}">
+      <!-- 医生头像图片位置，建议图片尺寸：120x120 -->
+      <image class="doctor-avatar" src="{{item.avatarUrl || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="doctor-info">
+        <text class="doctor-name">{{item.name}}</text>
+        <text class="doctor-title">{{item.title}}</text>
+        <text class="doctor-department">{{item.departmentName || '超声科'}}</text>
+        <text class="doctor-expertise">{{item.expertise || '擅长各类超声检查'}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 状态筛选弹窗 -->
+  <view class="modal" wx:if="{{showStatusModal}}" catchtap="hideStatusFilter">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-item" wx:for="{{statusOptions}}" wx:key="value" bindtap="selectStatus" data-status="{{item.value}}">
+        <text>{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 职称筛选弹窗 -->
+  <view class="modal" wx:if="{{showTitleModal}}" catchtap="hideTitleFilter">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-item" wx:for="{{titleOptions}}" wx:key="value" bindtap="selectTitle" data-title="{{item.value}}">
+        <text>{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+

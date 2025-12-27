@@ -1,0 +1,81 @@
+/* pages/myPatients/myPatients.wxss */
+.container {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+}
+
+.header {
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.patient-list {
+  margin-bottom: 40rpx;
+}
+
+.patient-item {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.patient-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.patient-id-card {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.patient-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 15rpx 30rpx;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  border: none;
+}
+
+.edit-btn {
+  background-color: #0b988f;
+  color: #fff;
+}
+
+.delete-btn {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+.add-btn {
+  background-color: #0b988f;
+  color: #fff;
+  text-align: center;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+

@@ -1,0 +1,11 @@
+<!--pages/patientCard/patientCard.wxml-->
+<view class="container">
+  <view class="patient-card">
+    <text class="hospital-name">华为大学总医院</text>
+    <view class="patient-info">
+      <text class="patient-name">{{patientName}}</text>
+      <text class="patient-id">{{patientIdCard}}</text>
+    </view>
+  </view>
+</view>
+

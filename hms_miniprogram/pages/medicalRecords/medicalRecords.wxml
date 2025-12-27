@@ -1,0 +1,54 @@
+<!--pages/medicalRecords/medicalRecords.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">病历查询</text>
+  </view>
+
+  <!-- 新增病历入口 -->
+  <view style="margin: 12px 0;">
+    <button type="primary" bindtap="goToCreateRecord" size="mini" plain="true">新增病历</button>
+  </view>
+
+  <!-- a.患者选择框 -->
+  <view class="patient-selector">
+    <picker mode="selector" range="{{patientNames}}" value="{{selectedPatientIndex}}" bindchange="onPatientChange">
+      <view class="picker">
+        <text>{{currentPatientName}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- b.查询时间按钮 -->
+  <view class="time-filter">
+    <button class="time-btn {{selectedTimeRange === 'month' ? 'active' : ''}}" bindtap="selectTimeRange" data-range="month">
+      最近一个月
+    </button>
+    <button class="time-btn {{selectedTimeRange === 'quarter' ? 'active' : ''}}" bindtap="selectTimeRange" data-range="quarter">
+      最近三个月
+    </button>
+    <button class="time-btn {{selectedTimeRange === 'year' ? 'active' : ''}}" bindtap="selectTimeRange" data-range="year">
+      最近一年
+    </button>
+  </view>
+
+  <!-- c.病历展示框 -->
+  <scroll-view class="records-list" scroll-y="true">
+    <view class="record-item" wx:for="{{records}}" wx:key="id" bindtap="viewRecord" data-record="{{item}}">
+      <view class="record-header">
+        <text class="record-date">{{formatDateTime(item.createdTime)}}</text>
+        <text class="record-doctor">{{item.doctorName || '医生'}}</text>
+      </view>
+      <text class="record-diagnosis">{{item.diagnosis || '暂无诊断'}}</text>
+      <text class="record-treatment">{{item.treatment || '暂无治疗方案'}}</text>
+      <view class="record-file" wx:if="{{item.fileUrl}}">
+        <text class="file-link" bindtap="previewFile" data-url="{{item.fileUrl}}">查看附件</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{records.length === 0}}">
+      <text>暂无病历记录</text>
+    </view>
+  </scroll-view>
+</view>
+
